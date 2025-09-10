@@ -49,7 +49,11 @@ export default function ProductCard({
     >
       {/* Product Link */}
       <Link
-        href={`/${currentLang}/${product.category?.slug?.current || "products"}/${product.slug.current}`}
+        href={
+          product.category?.slug?.current 
+            ? `/${currentLang}/${product.category.slug.current}/${product.slug.current}`
+            : `/${currentLang}/products/${product.slug.current}`
+        }
         className="block"
       >
         {/* Image Container */}

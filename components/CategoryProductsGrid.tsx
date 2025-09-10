@@ -87,21 +87,28 @@ export default function CategoryProductsGrid({
   return (
     <>
       {/* Compact Filter Toolbar */}
-      <div className="bg-background border-b border-border/50 sticky top-0 z-20">
+      <div className="bg-background border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
             {/* Product Count */}
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <span className="font-medium text-foreground">
-                {sortedAndFilteredProducts.length}
+                {searchQuery 
+                  ? `${sortedAndFilteredProducts.length}`
+                  : currentLang === "en" ? "Showing All" : "Alle Tonen"
+                }
               </span>
               <span>
-                {currentLang === "en"
-                  ? sortedAndFilteredProducts.length === 1
-                    ? "product"
-                    : "products"
-                  : sortedAndFilteredProducts.length === 1
-                    ? "product"
+                {searchQuery
+                  ? currentLang === "en"
+                    ? sortedAndFilteredProducts.length === 1
+                      ? "product"
+                      : "products"
+                    : sortedAndFilteredProducts.length === 1
+                      ? "product"
+                      : "producten"
+                  : currentLang === "en" 
+                    ? "products"
                     : "producten"}
               </span>
               {searchQuery && (

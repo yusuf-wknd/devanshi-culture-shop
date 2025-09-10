@@ -240,7 +240,7 @@ export default function QuickViewModal({
                 <WhatsAppButton
                   currentLang={currentLang}
                   productName={productName}
-                  className="relative static"
+                  className="static"
                 />
               </div>
             </div>

@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { urlFor } from "@/sanity/lib/image";
 import Image from "next/image";
+import { MapIcon } from "@heroicons/react/24/outline";
 
 interface PageProps {
   params: Promise<{
@@ -157,6 +158,17 @@ export default async function ContactPage({ params }: PageProps) {
                             </>
                           )}
                         </address>
+
+                        {/* Get Directions Button */}
+                        <a
+                          href="#map"
+                          className="inline-flex items-center space-x-2 mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                        >
+                          <MapIcon className="w-4 h-4" />
+                          <span>
+                            {lang === "en" ? "Get Directions" : "Routekaart"}
+                          </span>
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -292,7 +304,7 @@ export default async function ContactPage({ params }: PageProps) {
           </section>
 
           {/* Google Maps Section */}
-          <section className="py-16 sm:py-20 bg-secondary/30">
+          <section id="map" className="py-16 sm:py-20 bg-secondary/30">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-12">
                 <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">

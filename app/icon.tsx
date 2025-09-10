@@ -23,6 +23,7 @@ export default function Icon() {
           color: '#fffbf0',
           fontFamily: 'serif',
           fontWeight: 'bold',
+          borderRadius: '50%',
         }}
       >
         D

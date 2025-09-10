@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import {
   ChevronDownIcon,
@@ -103,8 +104,8 @@ export default function Header({ currentLang = "en" }: HeaderProps) {
   ];
 
   const languages = [
-    { code: "en", name: "English", flag: "🇺🇸" },
-    { code: "nl", name: "Nederlands", flag: "🇳🇱" },
+    { code: "en", name: "English" },
+    { code: "nl", name: "Nederlands" },
   ];
 
   return (
@@ -116,19 +117,14 @@ export default function Header({ currentLang = "en" }: HeaderProps) {
             href={`/${currentLang}`}
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-md">
-              <span className="text-primary-foreground font-serif font-bold text-lg">
-                D
-              </span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="font-serif text-xl font-bold text-primary">
-                Devanshi
-              </h1>
-              <p className="font-sans text-xs text-muted-foreground -mt-1">
-                Culture Shop
-              </p>
-            </div>
+            <Image
+              src="/logo.png"
+              alt="Devanshi Culture Shop"
+              width={400}
+              height={120}
+              className="h-24 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -167,9 +163,7 @@ export default function Header({ currentLang = "en" }: HeaderProps) {
                 onClick={toggleLangDropdown}
                 className="flex items-center space-x-1 px-3 py-2 text-sm font-medium text-foreground hover:text-primary hover:bg-secondary rounded-lg transition-colors"
               >
-                <span>
-                  {languages.find((lang) => lang.code === currentLang)?.flag}
-                </span>
+                <span>{currentLang.toUpperCase()}</span>
                 <span className="hidden sm:inline">
                   {languages.find((lang) => lang.code === currentLang)?.name}
                 </span>
@@ -188,7 +182,7 @@ export default function Header({ currentLang = "en" }: HeaderProps) {
                       className="flex items-center space-x-3 px-4 py-2 text-sm text-foreground hover:bg-secondary transition-colors"
                       onClick={() => setIsLangDropdownOpen(false)}
                     >
-                      <span>{language.flag}</span>
+                      <span>{language.code.toUpperCase()}</span>
                       <span>{language.name}</span>
                       {currentLang === language.code && (
                         <div className="w-2 h-2 bg-primary rounded-full ml-auto"></div>
