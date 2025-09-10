@@ -228,7 +228,9 @@ export default async function ProductPage({ params }: PageProps) {
                   <span className="text-muted-foreground mx-2">/</span>
                 </li>
                 <li>
-                  <span className="text-foreground font-medium">{productName}</span>
+                  <span className="text-foreground font-medium">
+                    {productName}
+                  </span>
                 </li>
               </ol>
             </div>
@@ -243,6 +245,7 @@ export default async function ProductPage({ params }: PageProps) {
                   <ProductImageGallery
                     images={productData.productImages}
                     productName={productName}
+                    currentLang={lang}
                   />
                 </div>
 
@@ -255,7 +258,9 @@ export default async function ProductPage({ params }: PageProps) {
                       className="inline-flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
                       <ArrowLeftIcon className="w-4 h-4 mr-2" />
-                      {lang === "en" ? "Back to Products" : "Terug naar Producten"}
+                      {lang === "en"
+                        ? "Back to Products"
+                        : "Terug naar Producten"}
                     </Link>
                     <ShareButton
                       url={`https://devanshicultureshop.nl/${lang}/products/${product}`}
@@ -346,7 +351,9 @@ export default async function ProductPage({ params }: PageProps) {
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12">
                   <h2 className="font-serif text-3xl font-bold text-foreground mb-4">
-                    {lang === "en" ? "You May Also Like" : "Dit Vind Je Ook Leuk"}
+                    {lang === "en"
+                      ? "You May Also Like"
+                      : "Dit Vind Je Ook Leuk"}
                   </h2>
                   <p className="text-muted-foreground">
                     {lang === "en"
@@ -356,7 +363,7 @@ export default async function ProductPage({ params }: PageProps) {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                  {relatedProducts.map((relatedProduct) => (
+                  {relatedProducts.map((relatedProduct: any) => (
                     <ProductCard
                       key={relatedProduct._id}
                       product={relatedProduct}
@@ -372,10 +379,7 @@ export default async function ProductPage({ params }: PageProps) {
         </main>
 
         <Footer currentLang={lang} />
-        <WhatsAppButton
-          currentLang={lang}
-          productName={productName}
-        />
+        <WhatsAppButton currentLang={lang} productName={productName} />
       </>
     );
   } catch (error) {
