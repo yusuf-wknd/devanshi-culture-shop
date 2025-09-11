@@ -117,31 +117,33 @@ export default function CategoryShowcase({
       : fallbackCategories.slice(0, maxItems);
 
   return (
-    <section className={`py-16 sm:py-20 lg:py-24 bg-secondary/30 ${className}`}>
+    <section
+      className={`py-12 sm:py-16 md:py-20 lg:py-24 bg-secondary/30 ${className}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         {title && (
-          <div className="text-center mb-16">
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
               {currentTitle}
             </h2>
-            <p className="font-sans text-lg text-muted-foreground max-w-3xl mx-auto">
+            <p className="font-sans text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
               {currentLang === "en"
                 ? "Discover our carefully curated collection of authentic cultural products from around the world"
                 : "Ontdek onze zorgvuldig samengestelde collectie authentieke culturele producten van over de hele wereld"}
             </p>
 
             {/* Decorative divider */}
-            <div className="flex items-center justify-center space-x-4 mt-8">
-              <div className="w-16 h-px bg-primary"></div>
-              <div className="w-3 h-3 bg-primary rounded-full"></div>
-              <div className="w-16 h-px bg-primary"></div>
+            <div className="flex items-center justify-center space-x-3 sm:space-x-4 mt-6 sm:mt-8">
+              <div className="w-12 sm:w-16 h-px bg-primary"></div>
+              <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full"></div>
+              <div className="w-12 sm:w-16 h-px bg-primary"></div>
             </div>
           </div>
         )}
 
         {/* Categories Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {categoriesToShow.map((category, index) => {
             const categoryName =
               category.categoryName[
@@ -187,8 +189,8 @@ export default function CategoryShowcase({
 
                     {/* Product Count Badge */}
                     {category.productCount && (
-                      <div className="absolute top-4 right-4 bg-background/20 backdrop-blur-sm rounded-full px-3 py-1 shadow-lg">
-                        <span className="text-xs font-medium text-white">
+                      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-background/80 backdrop-blur-sm rounded-full px-2 py-1 sm:px-3 sm:py-1 shadow-lg">
+                        <span className="text-xs font-medium text-foreground">
                           {category.productCount}{" "}
                           {currentLang === "en" ? "items" : "artikelen"}
                         </span>
@@ -197,9 +199,9 @@ export default function CategoryShowcase({
                   </div>
 
                   {/* Category Info */}
-                  <div className="p-6 space-y-4">
+                  <div className="p-4 sm:p-6 space-y-3 sm:space-y-4">
                     <div className="flex items-center justify-between">
-                      <h3 className="font-serif text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
+                      <h3 className="font-serif text-lg sm:text-xl font-bold text-foreground group-hover:text-primary transition-colors duration-300">
                         {categoryName}
                       </h3>
                       <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 group-hover:scale-110 transform">
@@ -208,7 +210,7 @@ export default function CategoryShowcase({
                     </div>
 
                     {description && (
-                      <p className="font-sans text-muted-foreground leading-relaxed">
+                      <p className="font-sans text-sm sm:text-base text-muted-foreground leading-relaxed">
                         {description}
                       </p>
                     )}
@@ -233,31 +235,31 @@ export default function CategoryShowcase({
 
         {/* View All Categories Button */}
         {showAll && categories.length > maxItems && (
-          <div className="text-center mt-16">
+          <div className="text-center mt-12 sm:mt-16">
             <Link
               href={`/${currentLang}/categories`}
-              className="inline-flex items-center space-x-3 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg hover:shadow-xl"
+              className="inline-flex items-center space-x-3 bg-primary text-primary-foreground px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg hover:shadow-xl"
             >
               <span>
                 {currentLang === "en"
                   ? "View All Categories"
                   : "Bekijk Alle Categorieën"}
               </span>
-              <ArrowRightIcon className="w-5 h-5" />
+              <ArrowRightIcon className="w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </div>
         )}
 
         {/* Additional Info */}
-        <div className="mt-20 text-center">
-          <div className="inline-flex items-center space-x-4 text-muted-foreground">
-            <div className="w-8 h-px bg-accent"></div>
-            <span className="font-serif text-sm font-medium tracking-wider uppercase">
+        <div className="mt-16 sm:mt-20 text-center">
+          <div className="inline-flex items-center sm:space-x-4 text-muted-foreground">
+            <div className="hidden sm:block w-6 sm:w-8 h-px bg-accent"></div>
+            <span className="font-serif text-xs sm:text-sm font-medium tracking-wider uppercase">
               {currentLang === "en"
                 ? "Authentic • Cultural • Handcrafted"
                 : "Authentiek • Cultureel • Handgemaakt"}
             </span>
-            <div className="w-8 h-px bg-accent"></div>
+            <div className="hidden sm:block w-6 sm:w-8 h-px bg-accent"></div>
           </div>
         </div>
       </div>

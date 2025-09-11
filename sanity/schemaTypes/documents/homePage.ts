@@ -22,7 +22,7 @@ export const homePage = defineType({
           fields: [
             {
               name: 'backgroundImage',
-              title: 'Background Image',
+              title: 'Background Image (Desktop)',
               type: 'image',
               options: {
                 hotspot: true,
@@ -36,6 +36,23 @@ export const homePage = defineType({
                 },
               ],
               validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'mobileImage',
+              title: 'Mobile Image',
+              type: 'image',
+              description: 'Optional mobile-specific image. If not provided, desktop image will be used on mobile devices.',
+              options: {
+                hotspot: true,
+              },
+              fields: [
+                {
+                  name: 'alt',
+                  title: 'Alt Text',
+                  type: 'string',
+                  validation: (Rule) => Rule.required(),
+                },
+              ],
             },
             {
               name: 'heading',

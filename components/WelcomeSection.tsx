@@ -20,17 +20,17 @@ interface WelcomeSectionProps {
 const portableTextComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p className="font-sans text-lg text-muted-foreground mb-6 leading-relaxed">
+      <p className="font-sans text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
         {children}
       </p>
     ),
     h2: ({ children }: any) => (
-      <h2 className="font-serif text-3xl font-bold text-foreground mb-4">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">
         {children}
       </h2>
     ),
     h3: ({ children }: any) => (
-      <h3 className="font-serif text-2xl font-semibold text-foreground mb-3">
+      <h3 className="font-serif text-xl sm:text-2xl font-semibold text-foreground mb-2 sm:mb-3">
         {children}
       </h3>
     ),
@@ -70,10 +70,10 @@ const portableTextComponents = {
   },
   listItem: {
     bullet: ({ children }: any) => (
-      <li className="font-sans text-lg text-muted-foreground">{children}</li>
+      <li className="font-sans text-base sm:text-lg text-muted-foreground">{children}</li>
     ),
     number: ({ children }: any) => (
-      <li className="font-sans text-lg text-muted-foreground">{children}</li>
+      <li className="font-sans text-base sm:text-lg text-muted-foreground">{children}</li>
     ),
   },
 };
@@ -87,18 +87,18 @@ export default function WelcomeSection({
   const currentBody = body[currentLang as keyof typeof body];
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-background">
+    <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-background">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-4 sm:mb-6">
             {currentHeading}
           </h2>
 
           {/* Decorative line */}
-          <div className="flex items-center justify-center space-x-4 mb-8">
-            <div className="w-16 h-px bg-primary"></div>
-            <div className="w-3 h-3 bg-primary rounded-full"></div>
-            <div className="w-16 h-px bg-primary"></div>
+          <div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
+            <div className="w-12 sm:w-16 h-px bg-primary"></div>
+            <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full"></div>
+            <div className="w-12 sm:w-16 h-px bg-primary"></div>
           </div>
         </div>
 
@@ -110,7 +110,7 @@ export default function WelcomeSection({
             />
           ) : (
             <div className="text-center">
-              <p className="font-sans text-lg text-muted-foreground leading-relaxed">
+              <p className="font-sans text-base sm:text-lg text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 {currentLang === "en"
                   ? "Welcome to Devanshi Culture Shop, where tradition meets craftsmanship. We celebrate the rich heritage and authentic cultural products that tell stories of generations past and present."
                   : "Welkom bij Devanshi Culture Shop, waar traditie en vakmanschap samenkomen. We vieren het rijke erfgoed en authentieke culturele producten die verhalen vertellen van generaties uit het verleden en heden."}

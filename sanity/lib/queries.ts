@@ -18,6 +18,10 @@ export const homePageQuery = groq`
         asset->,
         alt
       },
+      mobileImage {
+        asset->,
+        alt
+      },
       heading {
         ${translatableContent}
       },
@@ -403,6 +407,7 @@ export interface SanityImage {
 
 export interface HeroSlide {
   backgroundImage: SanityImage
+  mobileImage?: SanityImage
   heading: TranslatableText
   bodyText: TranslatableText
   buttonText: TranslatableText

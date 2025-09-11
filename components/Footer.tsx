@@ -103,13 +103,13 @@ export default async function Footer({
 
   return (
     <footer className="bg-primary border-t border-primary/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Brand Section */}
-          <div className="space-y-4">
+          <div className="col-span-1 sm:col-span-2 lg:col-span-1 space-y-4">
             <Link
               href={`/${currentLang}`}
-              className="hover:opacity-80 transition-opacity"
+              className="hover:opacity-80 transition-opacity inline-block"
             >
               <Image
                 src="/logo.png"
@@ -124,13 +124,13 @@ export default async function Footer({
                 ? "Discover authentic cultural products and heritage items. Your gateway to tradition and craftsmanship."
                 : "Ontdek authentieke culturele producten en erfgoeditems. Uw toegang tot traditie en vakmanschap."}
             </p>
-            <div className="flex space-x-4">
+            <div className="flex space-x-3">
               {/* Facebook */}
               <a
                 href="https://www.facebook.com/p/Devanshi-Culture-Shop-100090842495531/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-[#1877f2] hover:text-white transition-colors text-primary-foreground"
+                className="w-9 h-9 sm:w-8 sm:h-8 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-[#1877f2] hover:text-white transition-colors text-primary-foreground"
                 aria-label="Facebook"
               >
                 <FacebookIcon className="w-4 h-4" />
@@ -141,7 +141,7 @@ export default async function Footer({
                 href="https://wa.me/31618264718"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-8 h-8 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-[#25d366] hover:text-white transition-colors text-primary-foreground"
+                className="w-9 h-9 sm:w-8 sm:h-8 bg-primary-foreground/10 rounded-full flex items-center justify-center hover:bg-[#25d366] hover:text-white transition-colors text-primary-foreground"
                 aria-label="WhatsApp"
               >
                 <WhatsAppIcon className="w-4 h-4" />
@@ -249,28 +249,35 @@ export default async function Footer({
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-primary-foreground/20 pt-8 mt-8">
-          <div className="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <p className="text-primary-foreground/70 font-sans text-sm">
+        <div className="border-t border-primary-foreground/20 pt-6 sm:pt-8 mt-6 sm:mt-8">
+          <div className="flex flex-col sm:flex-row justify-between items-center space-y-3 sm:space-y-0">
+            <p className="text-primary-foreground/70 font-sans text-sm text-center sm:text-left">
               © {currentYear} Devanshi Culture Shop.{" "}
               {currentLang === "en"
                 ? "All rights reserved."
                 : "Alle rechten voorbehouden."}
             </p>
 
-            <div className="flex items-center space-x-1 text-primary-foreground/70 font-sans text-sm">
-              <span>{currentLang === "en" ? "Made with" : "Gemaakt met"}</span>
-              <HeartIcon className="w-4 h-4 text-red-500" />
-              <span>{currentLang === "en" ? "by" : "door"}</span>
-              <a
-                href="https://weekendlabs.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-accent hover:text-accent/80 transition-colors font-medium"
-              >
-                Weekend Labs
-              </a>
-              <span>
+            <div className="flex flex-col sm:flex-row items-center sm:space-x-1 text-primary-foreground/70 font-sans text-xs sm:text-sm text-center">
+              <div className="flex items-center space-x-1">
+                <span>{currentLang === "en" ? "Made with" : "Gemaakt met"}</span>
+                <HeartIcon className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
+                <span>{currentLang === "en" ? "by" : "door"}</span>
+                <a
+                  href="https://weekendlabs.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:text-accent/80 transition-colors font-medium"
+                >
+                  Weekend Labs
+                </a>
+              </div>
+              <span className="hidden sm:inline">
+                {currentLang === "en"
+                  ? "for cultural heritage"
+                  : "voor cultureel erfgoed"}
+              </span>
+              <span className="sm:hidden mt-1">
                 {currentLang === "en"
                   ? "for cultural heritage"
                   : "voor cultureel erfgoed"}
