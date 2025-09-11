@@ -98,7 +98,7 @@ export default function TrustBadges({
               ? "We are committed to providing you with the best cultural shopping experience"
               : "Wij zijn toegewijd om u de beste culturele winkelervaring te bieden"}
           </p>
-          
+
           {/* Decorative divider */}
           <div className="flex items-center justify-center space-x-3 sm:space-x-4">
             <div className="w-12 sm:w-16 h-px bg-primary"></div>
@@ -107,12 +107,14 @@ export default function TrustBadges({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {badges.map((badge, index) => {
             const IconComponent = getIcon(badge.icon);
             const isEven = index % 2 === 0;
-            const cardBg = isEven ? 'bg-secondary/10' : 'bg-primary/5';
-            const hoverBg = isEven ? 'hover:bg-secondary/20' : 'hover:bg-primary/10';
+            const cardBg = isEven ? "bg-secondary/10" : "bg-primary/5";
+            const hoverBg = isEven
+              ? "hover:bg-secondary/20"
+              : "hover:bg-primary/10";
 
             return (
               <div
@@ -132,7 +134,11 @@ export default function TrustBadges({
                     </h4>
                     {badge.description && (
                       <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed">
-                        {badge.description[currentLang as keyof typeof badge.description]}
+                        {
+                          badge.description[
+                            currentLang as keyof typeof badge.description
+                          ]
+                        }
                       </p>
                     )}
                   </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 
 // WhatsApp Icon Component
@@ -24,6 +24,26 @@ export default function WhatsAppButton({
   className = "",
 }: WhatsAppButtonProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Show button after 5 seconds on first visit, immediately on subsequent pages
+  useEffect(() => {
+    // Check if button has been shown this session
+    const hasBeenShown = sessionStorage.getItem('whatsappButtonShown');
+    
+    if (hasBeenShown === 'true') {
+      // Show immediately if already shown once this session
+      setIsVisible(true);
+    } else {
+      // First time this session - show after 5 second delay
+      const timer = setTimeout(() => {
+        setIsVisible(true);
+        sessionStorage.setItem('whatsappButtonShown', 'true');
+      }, 5000);
+      
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   const generateWhatsAppUrl = (message: string) => {
     const encodedMessage = encodeURIComponent(message);
@@ -81,19 +101,27 @@ export default function WhatsAppButton({
     <>
       {/* Backdrop */}
       {isExpanded && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 z-40"
           onClick={() => setIsExpanded(false)}
         />
       )}
-      
-      <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
+
+      <div
+        className={`fixed bottom-6 right-6 z-50 transition-all duration-500 ${
+          isVisible
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 translate-y-4 pointer-events-none"
+        } ${className}`}
+      >
         {/* Expanded Menu */}
-        <div className={`absolute bottom-16 right-0 bg-background rounded-2xl shadow-2xl border border-border p-4 min-w-[280px] transition-all duration-300 transform origin-bottom-right ${
-          isExpanded 
-            ? 'opacity-100 scale-100 translate-y-0' 
-            : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
-        }`}>
+        <div
+          className={`absolute bottom-16 right-0 bg-background rounded-2xl shadow-2xl border border-border p-4 min-w-[280px] transition-all duration-300 transform origin-bottom-right ${
+            isExpanded
+              ? "opacity-100 scale-100 translate-y-0"
+              : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+          }`}
+        >
           {/* Header */}
           <div className="mb-4 pb-3 border-b border-border">
             <div className="flex items-center space-x-2">
@@ -166,12 +194,20 @@ export default function WhatsAppButton({
         >
           {/* Icon with smooth transition */}
           <div className="relative w-7 h-7 flex items-center justify-center">
-            <WhatsAppIcon className={`absolute w-7 h-7 text-white transition-all duration-300 ${
-              isExpanded ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'
-            }`} />
-            <XMarkIcon className={`absolute w-6 h-6 text-white transition-all duration-300 ${
-              isExpanded ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'
-            }`} />
+            <WhatsAppIcon
+              className={`absolute w-7 h-7 text-white transition-all duration-300 ${
+                isExpanded
+                  ? "opacity-0 rotate-90 scale-75"
+                  : "opacity-100 rotate-0 scale-100"
+              }`}
+            />
+            <XMarkIcon
+              className={`absolute w-6 h-6 text-white transition-all duration-300 ${
+                isExpanded
+                  ? "opacity-100 rotate-0 scale-100"
+                  : "opacity-0 -rotate-90 scale-75"
+              }`}
+            />
           </div>
 
           {/* Ripple Effect - only when not expanded */}

@@ -254,7 +254,7 @@ export default function SearchInput({
       </form>
 
       {/* Search Dropdown - Only for header variant with dropdown enabled */}
-      {showDropdown && variant === "header" && query && isFocused && (
+      {showDropdown && variant === "header" && query && isFocused && (isLoadingResults || products.length > 0) && (
         <SearchDropdown
           products={products}
           searchQuery={query}
