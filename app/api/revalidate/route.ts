@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { parseBody } from 'next-sanity/webhook';
 
-// Types for Sanity webhook payload
-interface SanityDocument {
+// Types for Sanity webhook payload (simplified to match actual structure)
+interface SanityWebhookBody {
   _id: string;
   _type: string;
+  _rev: string;
+  _createdAt?: string;
+  _updatedAt?: string;
   slug?: {
     current: string;
   };
@@ -15,48 +18,14 @@ interface SanityDocument {
       current: string;
     };
   };
-}
-
-interface SanityWebhookPayload {
-  _id: string;
-  _type: string;
-  _rev: string;
-  slug?: {
-    current: string;
-  };
-  category?: {
-    _ref: string;
-  };
-}
-
-interface WebhookBody {
-  _type: 'webhook';
-  projectId: string;
-  dataset: string;
-  ids: {
-    created: string[];
-    updated: string[];
-    deleted: string[];
-  };
-  mutations: Array<{
-    _id: string;
-    _type: string;
-    create?: SanityDocument;
-    createOrReplace?: SanityDocument;
-    createIfNotExists?: SanityDocument;
-    patch?: {
-      id: string;
-    };
-    delete?: {
-      id: string;
-    };
-  }>;
+  // Allow for additional document fields
+  [key: string]: any;
 }
 
 // The parseBody function from next-sanity handles signature verification automatically
 
 // Get paths to revalidate based on document type and data
-function getPathsToRevalidate(document: SanityDocument): string[] {
+function getPathsToRevalidate(document: SanityWebhookBody): string[] {
   const paths: string[] = [];
   const languages = ['en', 'nl'];
 
@@ -145,7 +114,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Parse the webhook body and verify signature using next-sanity
-    const { isValidSignature, body: webhookData } = await parseBody<WebhookBody>(
+    const { isValidSignature, body: webhookData } = await parseBody<SanityWebhookBody>(
       request,
       secret,
       true // Wait for Content Lake eventual consistency
@@ -169,50 +138,43 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Check if required fields exist
+    if (!webhookData._id || !webhookData._type) {
+      console.error('Webhook payload missing required fields:', { 
+        hasId: !!webhookData._id, 
+        hasType: !!webhookData._type 
+      });
+      return NextResponse.json(
+        { error: 'Webhook payload missing required fields (_id, _type)' },
+        { status: 400 }
+      );
+    }
+
+    // Log the actual webhook payload for debugging
     console.log('Webhook received:', {
+      id: webhookData._id,
       type: webhookData._type,
-      projectId: webhookData.projectId,
-      dataset: webhookData.dataset,
-      mutations: webhookData.mutations.length
+      rev: webhookData._rev,
+      hasSlug: !!webhookData.slug?.current,
+      hasCategory: !!webhookData.category
     });
+    
+    // For debugging - log the full payload (remove in production)
+    console.log('Full webhook payload:', JSON.stringify(webhookData, null, 2));
 
     const pathsToRevalidate = new Set<string>();
 
-    // Process each mutation
-    for (const mutation of webhookData.mutations) {
-      let document: SanityDocument | null = null;
-
-      // Extract document data from mutation
-      if (mutation.create) {
-        document = mutation.create;
-      } else if (mutation.createOrReplace) {
-        document = mutation.createOrReplace;
-      } else if (mutation.createIfNotExists) {
-        document = mutation.createIfNotExists;
-      } else if (mutation.patch) {
-        // For patches, we need to make assumptions about the document type
-        // This is a limitation - we might need to fetch the document to get complete info
-        document = {
-          _id: mutation.patch.id,
-          _type: mutation._type
-        };
-      } else if (mutation.delete) {
-        // For deletions, we have limited info but can still revalidate common paths
-        document = {
-          _id: mutation.delete.id,
-          _type: mutation._type
-        };
-      }
-
-      if (document) {
-        const paths = getPathsToRevalidate(document);
-        paths.forEach(path => pathsToRevalidate.add(path));
-      }
-    }
+    // Process the webhook document directly (not an array of mutations)
+    const paths = getPathsToRevalidate(webhookData);
+    paths.forEach(path => pathsToRevalidate.add(path));
 
     // Revalidate all collected paths
     const revalidatedPaths: string[] = [];
     const errors: string[] = [];
+
+    if (pathsToRevalidate.size === 0) {
+      console.log(`No paths to revalidate for document type: ${webhookData._type}`);
+    }
 
     for (const path of Array.from(pathsToRevalidate)) {
       try {
@@ -230,7 +192,10 @@ export async function POST(request: NextRequest) {
     const response = {
       revalidated: revalidatedPaths,
       timestamp: new Date().toISOString(),
-      mutations: webhookData.mutations.length,
+      document: {
+        id: webhookData._id,
+        type: webhookData._type
+      },
       ...(errors.length > 0 && { errors })
     };
 
