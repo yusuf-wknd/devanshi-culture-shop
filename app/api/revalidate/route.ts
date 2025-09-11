@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { revalidatePath, revalidateTag } from 'next/cache';
-import { createHash, createHmac } from 'crypto';
+import { parseBody } from 'next-sanity/webhook';
 
 // Types for Sanity webhook payload
 interface SanityDocument {
@@ -53,14 +53,7 @@ interface WebhookBody {
   }>;
 }
 
-// Verify the webhook signature
-function verifySignature(body: string, signature: string, secret: string): boolean {
-  const expectedSignature = createHmac('sha256', secret)
-    .update(body)
-    .digest('hex');
-    
-  return `sha256=${expectedSignature}` === signature;
-}
+// The parseBody function from next-sanity handles signature verification automatically
 
 // Get paths to revalidate based on document type and data
 function getPathsToRevalidate(document: SanityDocument): string[] {
@@ -151,21 +144,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get the signature from headers
-    const signature = request.headers.get('sanity-webhook-signature');
-    if (!signature) {
-      console.error('Missing webhook signature');
-      return NextResponse.json(
-        { error: 'Missing webhook signature' },
-        { status: 400 }
-      );
-    }
+    // Parse the webhook body and verify signature using next-sanity
+    const { isValidSignature, body: webhookData } = await parseBody<WebhookBody>(
+      request,
+      secret,
+      true // Wait for Content Lake eventual consistency
+    );
 
-    // Get the request body
-    const body = await request.text();
-    
-    // Verify the webhook signature
-    if (!verifySignature(body, signature, secret)) {
+    // Check signature validation
+    if (!isValidSignature) {
       console.error('Invalid webhook signature');
       return NextResponse.json(
         { error: 'Invalid webhook signature' },
@@ -173,14 +160,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Parse the webhook payload
-    let webhookData: WebhookBody;
-    try {
-      webhookData = JSON.parse(body);
-    } catch (error) {
-      console.error('Invalid JSON payload:', error);
+    // Check if body was parsed successfully
+    if (!webhookData) {
+      console.error('Failed to parse webhook payload');
       return NextResponse.json(
-        { error: 'Invalid JSON payload' },
+        { error: 'Invalid webhook payload' },
         { status: 400 }
       );
     }
