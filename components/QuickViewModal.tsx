@@ -50,10 +50,10 @@ export default function QuickViewModal({
 
   if (!isOpen || !product) return null;
 
-  const productName = product.productName[currentLang as "en" | "nl"];
-  const productDescription = product.description?.[currentLang as "en" | "nl"];
+  const productName = product.productName[currentLang as "en" | "nl"] || product.productName.en;
+  const productDescription = product.description?.[currentLang as "en" | "nl"] || product.description?.en;
   const categoryName =
-    product.category?.categoryName?.[currentLang as "en" | "nl"];
+    product.category?.categoryName?.[currentLang as "en" | "nl"] || product.category?.categoryName?.en;
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {

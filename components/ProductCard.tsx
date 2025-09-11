@@ -24,13 +24,15 @@ export default function ProductCard({
   enableQuickView = false,
 }: ProductCardProps) {
   const productName =
-    product.productName[currentLang as keyof typeof product.productName];
+    product.productName[currentLang as keyof typeof product.productName] ||
+    product.productName.en;
   const categoryName =
     product.category?.categoryName[
       currentLang as keyof typeof product.category.categoryName
-    ];
+    ] || product.category?.categoryName.en;
   const description =
-    product.description?.[currentLang as keyof typeof product.description];
+    product.description?.[currentLang as keyof typeof product.description] ||
+    product.description?.en;
 
   const mainImage = product.productImages?.[0];
   const hoverImage = product.productImages?.[1];
@@ -130,7 +132,7 @@ export default function ProductCard({
           )}
 
           {/* CTA Button */}
-          <div className="pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <div className="pt-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
             <button className="w-full py-2 px-4 bg-primary text-primary-foreground font-medium rounded-lg hover:bg-primary/90 transition-colors text-sm">
               {currentLang === "en" ? "View Details" : "Bekijk Details"}
             </button>

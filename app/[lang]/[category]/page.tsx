@@ -55,14 +55,15 @@ export async function generateMetadata({
 
     const title =
       categoryData.seo?.metaTitle?.[lang as "en" | "nl"] ||
-      `${categoryData.categoryName[lang as "en" | "nl"]} - Devanshi Culture Shop`;
+      `${categoryData.categoryName[lang as "en" | "nl"] || categoryData.categoryName.en} - Devanshi Culture Shop`;
 
     const description =
       categoryData.seo?.metaDescription?.[lang as "en" | "nl"] ||
       categoryData.description?.[lang as "en" | "nl"] ||
+      categoryData.description?.en ||
       (lang === "en"
         ? `Discover authentic ${categoryData.categoryName.en} at Devanshi Culture Shop`
-        : `Ontdek authentieke ${categoryData.categoryName.nl} bij Devanshi Culture Shop`);
+        : `Ontdek authentieke ${categoryData.categoryName.nl || categoryData.categoryName.en} bij Devanshi Culture Shop`);
 
     return {
       title,
@@ -82,7 +83,7 @@ export async function generateMetadata({
                 height: 630,
                 alt:
                   categoryData.categoryImage.alt ||
-                  categoryData.categoryName[lang as "en" | "nl"],
+                  categoryData.categoryName[lang as "en" | "nl"] || categoryData.categoryName.en,
               },
             ]
           : [],
@@ -110,8 +111,8 @@ export default async function CategoryPage({ params }: PageProps) {
       notFound();
     }
 
-    const categoryName = categoryData.categoryName[lang as "en" | "nl"];
-    const categoryDescription = categoryData.description?.[lang as "en" | "nl"];
+    const categoryName = categoryData.categoryName[lang as "en" | "nl"] || categoryData.categoryName.en;
+    const categoryDescription = categoryData.description?.[lang as "en" | "nl"] || categoryData.description?.en;
 
     // Generate JSON-LD structured data
     const structuredData = {
@@ -126,7 +127,7 @@ export default async function CategoryPage({ params }: PageProps) {
         itemListElement: products.map((product: Product, index: number) => ({
           "@type": "Product",
           position: index + 1,
-          name: product.productName[lang as "en" | "nl"],
+          name: product.productName[lang as "en" | "nl"] || product.productName.en,
           url: `https://devanshicultureshop.nl/${lang}/${category}/${product.slug.current}`,
           image: product.productImages[0]
             ? urlFor(product.productImages[0].asset)

@@ -51,13 +51,13 @@ export default function CategoryProductsGrid({
       const query = searchQuery.toLowerCase();
       filteredProducts = products.filter((product) => {
         const name =
-          product.productName[
+          (product.productName[
             currentLang as keyof typeof product.productName
-          ]?.toLowerCase() || "";
+          ] || product.productName.en)?.toLowerCase() || "";
         const description =
-          product.description?.[
+          (product.description?.[
             currentLang as keyof typeof product.description
-          ]?.toLowerCase() || "";
+          ] || product.description?.en)?.toLowerCase() || "";
         return name.includes(query) || description.includes(query);
       });
     }
@@ -67,9 +67,9 @@ export default function CategoryProductsGrid({
       switch (sortBy) {
         case "name-asc":
           return (
-            a.productName[currentLang as keyof typeof a.productName] || ""
+            a.productName[currentLang as keyof typeof a.productName] || a.productName.en || ""
           ).localeCompare(
-            b.productName[currentLang as keyof typeof b.productName] || ""
+            b.productName[currentLang as keyof typeof b.productName] || b.productName.en || ""
           );
         case "price-asc":
           return (a.price || 0) - (b.price || 0);

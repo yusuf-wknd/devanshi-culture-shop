@@ -59,10 +59,10 @@ export default function ProductImageGallery({ images, productName, currentLang }
 
   return (
     <>
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {/* Main Image */}
         <div 
-          className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-secondary/30 shadow-lg group cursor-pointer"
+          className="relative aspect-[4/3] overflow-hidden rounded-xl sm:rounded-2xl bg-secondary/30 shadow-lg group cursor-pointer"
           onClick={() => openModal(selectedImage)}
         >
           <Image
@@ -79,16 +79,16 @@ export default function ProductImageGallery({ images, productName, currentLang }
           
           {/* View larger overlay */}
           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg">
-              <span className="text-sm font-medium text-foreground">
-                {currentLang === "en" ? "Click to view larger" : "Klik voor groter beeld"}
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 backdrop-blur-sm px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg">
+              <span className="text-xs sm:text-sm font-medium text-foreground">
+                {currentLang === "en" ? "Tap to view larger" : "Tik voor groter beeld"}
               </span>
             </div>
           </div>
 
           {/* Image counter */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+            <div className="absolute bottom-2 right-2 sm:bottom-4 sm:right-4 bg-black/60 backdrop-blur-sm text-white px-2 py-0.5 sm:px-3 sm:py-1 rounded-full text-xs sm:text-sm">
               {selectedImage + 1} / {images.length}
             </div>
           )}
@@ -96,7 +96,7 @@ export default function ProductImageGallery({ images, productName, currentLang }
 
         {/* Thumbnail Images */}
         {images.length > 1 && (
-          <div className="grid grid-cols-5 gap-3">
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2 sm:gap-3">
             {images.slice(0, 5).map((image: any, index: number) => (
               <div
                 key={index}
@@ -126,7 +126,7 @@ export default function ProductImageGallery({ images, productName, currentLang }
       {/* Modal */}
       {isModalOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4"
           onClick={closeModal}
           onKeyDown={handleKeyDown}
           tabIndex={0}
@@ -134,9 +134,9 @@ export default function ProductImageGallery({ images, productName, currentLang }
           {/* Close button */}
           <button
             onClick={closeModal}
-            className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+            className="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
           >
-            <XMarkIcon className="w-6 h-6 text-white" />
+            <XMarkIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </button>
 
           {/* Navigation arrows */}
@@ -147,18 +147,18 @@ export default function ProductImageGallery({ images, productName, currentLang }
                   e.stopPropagation();
                   prevImage();
                 }}
-                className="absolute left-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
               >
-                <ChevronLeftIcon className="w-6 h-6 text-white" />
+                <ChevronLeftIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </button>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   nextImage();
                 }}
-                className="absolute right-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 p-2 sm:p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
               >
-                <ChevronRightIcon className="w-6 h-6 text-white" />
+                <ChevronRightIcon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
               </button>
             </>
           )}
@@ -168,7 +168,7 @@ export default function ProductImageGallery({ images, productName, currentLang }
             className="relative max-w-4xl max-h-full w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full h-full max-w-3xl max-h-[80vh]">
+            <div className="relative w-full h-full max-w-3xl max-h-[85vh] sm:max-h-[80vh]">
               <Image
                 src={urlFor(images[selectedImage].asset)
                   .width(1200)
@@ -185,7 +185,7 @@ export default function ProductImageGallery({ images, productName, currentLang }
 
           {/* Image counter */}
           {images.length > 1 && (
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm">
+            <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 bg-white/10 backdrop-blur-sm text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm">
               {selectedImage + 1} / {images.length}
             </div>
           )}

@@ -68,14 +68,15 @@ export async function generateMetadata({
 
     const title =
       productData.seo?.metaTitle?.[lang as "en" | "nl"] ||
-      `${productData.productName[lang as "en" | "nl"]} - Devanshi Culture Shop`;
+      `${productData.productName[lang as "en" | "nl"] || productData.productName.en} - Devanshi Culture Shop`;
 
     const description =
       productData.seo?.metaDescription?.[lang as "en" | "nl"] ||
       productData.description?.[lang as "en" | "nl"] ||
+      productData.description?.en ||
       (lang === "en"
         ? `Discover ${productData.productName.en} at Devanshi Culture Shop - Authentic cultural products`
-        : `Ontdek ${productData.productName.nl} bij Devanshi Culture Shop - Authentieke culturele producten`);
+        : `Ontdek ${productData.productName.nl || productData.productName.en} bij Devanshi Culture Shop - Authentieke culturele producten`);
 
     return {
       title,
@@ -96,7 +97,7 @@ export async function generateMetadata({
                   height: 630,
                   alt:
                     productData.productImages[0].alt ||
-                    productData.productName[lang as "en" | "nl"],
+                    productData.productName[lang as "en" | "nl"] || productData.productName.en,
                 },
               ]
             : [],
@@ -126,10 +127,10 @@ export default async function ProductPage({ params }: PageProps) {
     }
 
     // For products route, allow products without categories
-    const productName = productData.productName[lang as "en" | "nl"];
-    const productDescription = productData.description?.[lang as "en" | "nl"];
+    const productName = productData.productName[lang as "en" | "nl"] || productData.productName.en;
+    const productDescription = productData.description?.[lang as "en" | "nl"] || productData.description?.en;
     const categoryName =
-      productData.category?.categoryName?.[lang as "en" | "nl"];
+      productData.category?.categoryName?.[lang as "en" | "nl"] || productData.category?.categoryName?.en;
 
     // Get related products (same category if exists, or just random products)
     const relatedProducts = allProducts

@@ -78,16 +78,28 @@ export default function WhatsAppButton({
   ];
 
   return (
-    <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
-      {/* Expanded Menu */}
+    <>
+      {/* Backdrop */}
       {isExpanded && (
-        <div className="mb-4 bg-background rounded-2xl shadow-2xl border border-border p-4 min-w-[280px] animate-in slide-in-from-bottom-2">
+        <div 
+          className="fixed inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-300 z-40"
+          onClick={() => setIsExpanded(false)}
+        />
+      )}
+      
+      <div className={`fixed bottom-6 right-6 z-50 ${className}`}>
+        {/* Expanded Menu */}
+        <div className={`absolute bottom-16 right-0 bg-background rounded-2xl shadow-2xl border border-border p-4 min-w-[280px] transition-all duration-300 transform origin-bottom-right ${
+          isExpanded 
+            ? 'opacity-100 scale-100 translate-y-0' 
+            : 'opacity-0 scale-95 translate-y-4 pointer-events-none'
+        }`}>
           {/* Header */}
-          <div className="flex items-center justify-between mb-4 pb-3 border-b border-border">
+          <div className="mb-4 pb-3 border-b border-border">
             <div className="flex items-center space-x-2">
-              {/* <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-bold">WA</span>
-              </div> */}
+              <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                <WhatsAppIcon className="w-5 h-5 text-white" />
+              </div>
               <div>
                 <h4 className="font-serif font-semibold text-foreground text-sm">
                   {currentLang === "en" ? "WhatsApp Us" : "WhatsApp Ons"}
@@ -99,12 +111,6 @@ export default function WhatsAppButton({
                 </p>
               </div>
             </div>
-            <button
-              onClick={() => setIsExpanded(false)}
-              className="p-1 hover:bg-secondary rounded-full transition-colors"
-            >
-              <XMarkIcon className="w-4 h-4 text-muted-foreground" />
-            </button>
           </div>
 
           {/* Quick Message Options */}
@@ -115,7 +121,7 @@ export default function WhatsAppButton({
                 href={generateWhatsAppUrl(msg.message)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-colors group"
+                className="flex items-center space-x-3 p-3 hover:bg-secondary rounded-lg transition-all duration-200 group hover:scale-[1.02] hover:shadow-sm"
                 onClick={() => setIsExpanded(false)}
               >
                 <span className="text-lg">{msg.icon}</span>
@@ -123,10 +129,8 @@ export default function WhatsAppButton({
                   <p className="font-medium text-foreground text-sm group-hover:text-primary transition-colors">
                     {msg.text}
                   </p>
-                  <p className="text-xs text-muted-foreground truncate">
-                    {msg.message.length > 40
-                      ? `${msg.message.substring(0, 40)}...`
-                      : msg.message}
+                  <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                    {msg.message}
                   </p>
                 </div>
               </a>
@@ -141,7 +145,7 @@ export default function WhatsAppButton({
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center space-x-2 py-3 bg-green-500 text-white font-medium rounded-xl hover:bg-green-600 transition-colors"
+              className="w-full flex items-center justify-center space-x-2 py-3 bg-green-500 text-white font-medium rounded-xl hover:bg-green-600 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg"
               onClick={() => setIsExpanded(false)}
             >
               <WhatsAppIcon className="w-5 h-5" />
@@ -149,43 +153,48 @@ export default function WhatsAppButton({
             </a>
           </div>
         </div>
-      )}
 
-      {/* Main Button */}
-      <button
-        onClick={() => setIsExpanded(!isExpanded)}
-        className="group relative w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
-        aria-label={
-          currentLang === "en"
-            ? "Contact us via WhatsApp"
-            : "Contact ons via WhatsApp"
-        }
-      >
-        {/* WhatsApp Icon */}
-        {!isExpanded ? (
-          <WhatsAppIcon className="w-7 h-7 text-white" />
-        ) : (
-          <XMarkIcon className="w-6 h-6 text-white" />
-        )}
+        {/* Main Button */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="group relative w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center hover:scale-110"
+          aria-label={
+            currentLang === "en"
+              ? "Contact us via WhatsApp"
+              : "Contact ons via WhatsApp"
+          }
+        >
+          {/* Icon with smooth transition */}
+          <div className="relative w-7 h-7 flex items-center justify-center">
+            <WhatsAppIcon className={`absolute w-7 h-7 text-white transition-all duration-300 ${
+              isExpanded ? 'opacity-0 rotate-90 scale-75' : 'opacity-100 rotate-0 scale-100'
+            }`} />
+            <XMarkIcon className={`absolute w-6 h-6 text-white transition-all duration-300 ${
+              isExpanded ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-90 scale-75'
+            }`} />
+          </div>
 
-        {/* Ripple Effect */}
-        <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-15 scale-110"></div>
+          {/* Ripple Effect - only when not expanded */}
+          {!isExpanded && (
+            <div className="absolute inset-0 rounded-full bg-green-400 animate-ping opacity-15 scale-110"></div>
+          )}
 
-        {/* Notification Badge */}
+          {/* Notification Badge */}
+          {!isExpanded && (
+            <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center transition-all duration-300">
+              <span className="text-white text-xs font-bold">1</span>
+            </div>
+          )}
+        </button>
+
+        {/* Tooltip */}
         {!isExpanded && (
-          <div className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-bold">1</span>
+          <div className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-2 bg-foreground text-background text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
+            {currentLang === "en" ? "Chat with us" : "Chat met ons"}
+            <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-foreground"></div>
           </div>
         )}
-      </button>
-
-      {/* Tooltip */}
-      {!isExpanded && (
-        <div className="absolute right-16 top-1/2 -translate-y-1/2 px-3 py-2 bg-foreground text-background text-sm rounded-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
-          {currentLang === "en" ? "Chat with us" : "Chat met ons"}
-          <div className="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-foreground"></div>
-        </div>
-      )}
-    </div>
+      </div>
+    </>
   );
 }

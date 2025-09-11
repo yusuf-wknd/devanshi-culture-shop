@@ -86,20 +86,20 @@ export default async function ContactPage({ params }: PageProps) {
 
         <main>
           {/* Hero Section */}
-          <section className="py-16 sm:py-20 lg:py-24 bg-secondary/30">
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24 bg-secondary/30">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-8">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 sm:mb-8">
                 {lang === "en" ? "Contact Us" : "Contact Ons"}
               </h1>
 
               {/* Decorative line */}
-              <div className="flex items-center justify-center space-x-4 mb-8">
-                <div className="w-16 h-px bg-primary"></div>
-                <div className="w-3 h-3 bg-primary rounded-full"></div>
-                <div className="w-16 h-px bg-primary"></div>
+              <div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
+                <div className="w-12 sm:w-16 h-px bg-primary"></div>
+                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-primary rounded-full"></div>
+                <div className="w-12 sm:w-16 h-px bg-primary"></div>
               </div>
 
-              <p className="font-sans text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
+              <p className="font-sans text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 {lang === "en"
                   ? "We'd love to hear from you. Visit our store, give us a call, or send us a message to learn more about our authentic cultural products."
                   : "We horen graag van u. Bezoek onze winkel, bel ons of stuur ons een bericht om meer te weten te komen over onze authentieke culturele producten."}
@@ -108,15 +108,15 @@ export default async function ContactPage({ params }: PageProps) {
           </section>
 
           {/* Contact Information Section */}
-          <section className="py-16 sm:py-20 bg-background">
+          <section className="py-12 sm:py-16 md:py-20 bg-background">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
                 {/* Contact Details */}
-                <div className="space-y-8">
+                <div className="space-y-6 sm:space-y-8">
                   {/* Store Address */}
-                  <div className="bg-secondary/20 rounded-2xl p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="bg-secondary/20 rounded-2xl p-4 sm:p-6">
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-6 h-6 text-primary-foreground"
                           fill="none"
@@ -138,7 +138,7 @@ export default async function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground text-lg mb-2">
+                        <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">
                           {lang === "en"
                             ? "Visit Our Store"
                             : "Bezoek Onze Winkel"}
@@ -162,7 +162,7 @@ export default async function ContactPage({ params }: PageProps) {
                         {/* Get Directions Button */}
                         <a
                           href="#map"
-                          className="inline-flex items-center space-x-2 mt-4 px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
+                          className="inline-flex items-center space-x-2 mt-3 sm:mt-4 px-3 py-2 sm:px-4 sm:py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors text-sm font-medium"
                         >
                           <MapIcon className="w-4 h-4" />
                           <span>
@@ -174,9 +174,9 @@ export default async function ContactPage({ params }: PageProps) {
                   </div>
 
                   {/* Phone Numbers */}
-                  <div className="bg-secondary/20 rounded-2xl p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="bg-secondary/20 rounded-2xl p-4 sm:p-6">
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-6 h-6 text-primary-foreground"
                           fill="none"
@@ -192,7 +192,7 @@ export default async function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground text-lg mb-2">
+                        <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">
                           {lang === "en" ? "Call Us" : "Bel Ons"}
                         </h3>
                         <div className="space-y-1">
@@ -216,9 +216,9 @@ export default async function ContactPage({ params }: PageProps) {
                   </div>
 
                   {/* Email */}
-                  <div className="bg-secondary/20 rounded-2xl p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="bg-secondary/20 rounded-2xl p-4 sm:p-6">
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-6 h-6 text-primary-foreground"
                           fill="none"
@@ -234,7 +234,7 @@ export default async function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground text-lg mb-2">
+                        <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">
                           {lang === "en" ? "Email Us" : "E-mail Ons"}
                         </h3>
                         <a
@@ -249,9 +249,9 @@ export default async function ContactPage({ params }: PageProps) {
                   </div>
 
                   {/* Opening Hours */}
-                  <div className="bg-secondary/20 rounded-2xl p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                  <div className="bg-secondary/20 rounded-2xl p-4 sm:p-6">
+                    <div className="flex items-start space-x-3 sm:space-x-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
                         <svg
                           className="w-6 h-6 text-primary-foreground"
                           fill="none"
@@ -267,7 +267,7 @@ export default async function ContactPage({ params }: PageProps) {
                         </svg>
                       </div>
                       <div>
-                        <h3 className="font-semibold text-foreground text-lg mb-2">
+                        <h3 className="font-semibold text-foreground text-base sm:text-lg mb-2">
                           {lang === "en" ? "Opening Hours" : "Openingstijden"}
                         </h3>
                         <div className="text-muted-foreground whitespace-pre-line">
@@ -285,7 +285,7 @@ export default async function ContactPage({ params }: PageProps) {
                 {storeSettings?.storeImage &&
                   storeSettings.storeImage.asset && (
                     <div className="lg:order-first">
-                      <div className="relative h-96 lg:h-[500px] rounded-2xl overflow-hidden">
+                      <div className="relative h-64 sm:h-80 md:h-96 lg:h-[500px] rounded-2xl overflow-hidden">
                         <Image
                           src={storeSettings.storeImage.asset.url}
                           alt={
@@ -304,21 +304,21 @@ export default async function ContactPage({ params }: PageProps) {
           </section>
 
           {/* Google Maps Section */}
-          <section id="map" className="py-16 sm:py-20 bg-secondary/30">
+          <section id="map" className="py-12 sm:py-16 md:py-20 bg-secondary/30">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+              <div className="text-center mb-8 sm:mb-12">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                   {lang === "en" ? "Find Us Here" : "Vind Ons Hier"}
                 </h2>
-                <p className="font-sans text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="font-sans text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
                   {lang === "en"
                     ? "Located in the heart of Amsterdam, our store is easily accessible by public transport and car."
                     : "Gelegen in het hart van Amsterdam, onze winkel is gemakkelijk bereikbaar met het openbaar vervoer en de auto."}
                 </p>
               </div>
 
-              <div className="bg-background rounded-2xl p-8 shadow-lg border border-border/50">
-                <div className="aspect-video w-full rounded-xl overflow-hidden">
+              <div className="bg-background rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg border border-border/50">
+                <div className="aspect-[4/3] sm:aspect-video w-full rounded-xl overflow-hidden">
                   <iframe
                     src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d152.43843110003021!2d4.955045014717738!3d52.31573216869728!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c60b8e7d94a449%3A0xd03e035b662bd809!2sAnton%20de%20Komplein%20160%2C%201102%20BP%20Amsterdam%2C%20Netherlands!5e0!3m2!1sen!2sus!4v1757505121609!5m2!1sen!2sus"
                     width="100%"
@@ -339,25 +339,25 @@ export default async function ContactPage({ params }: PageProps) {
           </section>
 
           {/* Quick Contact Section */}
-          <section className="py-16 sm:py-20 bg-primary/5">
+          <section className="py-12 sm:py-16 md:py-20 bg-primary/5">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 {lang === "en" ? "Ready to Explore?" : "Klaar om te Ontdekken?"}
               </h2>
 
-              <p className="font-sans text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="font-sans text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
                 {lang === "en"
                   ? "Have questions about our cultural products or need personalized recommendations? We're here to help you find the perfect authentic pieces."
                   : "Heeft u vragen over onze culturele producten of heeft u gepersonaliseerde aanbevelingen nodig? We helpen u graag bij het vinden van de perfecte authentieke stukken."}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
                 <a
                   href={`tel:${storeSettings?.phoneMain || "+31123456789"}`}
-                  className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg"
+                  className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg w-full sm:w-auto justify-center"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -374,10 +374,10 @@ export default async function ContactPage({ params }: PageProps) {
 
                 <a
                   href={`mailto:${storeSettings?.email || "info@devanshicultureshop.nl"}`}
-                  className="inline-flex items-center space-x-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-xl font-medium hover:bg-accent transition-colors border border-border"
+                  className="inline-flex items-center space-x-2 bg-secondary text-secondary-foreground px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-medium hover:bg-accent transition-colors border border-border w-full sm:w-auto justify-center"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="w-4 h-4 sm:w-5 sm:h-5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -407,12 +407,12 @@ export default async function ContactPage({ params }: PageProps) {
       <>
         <Header currentLang={lang} />
         <main>
-          <section className="py-16 sm:py-20 lg:py-24">
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h1 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-8">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 sm:mb-8">
                 {lang === "en" ? "Contact Us" : "Contact Ons"}
               </h1>
-              <p className="font-sans text-xl text-muted-foreground leading-relaxed">
+              <p className="font-sans text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 {lang === "en"
                   ? "We are currently updating our contact information. Please check back soon!"
                   : "We werken momenteel onze contactinformatie bij. Kom binnenkort terug!"}

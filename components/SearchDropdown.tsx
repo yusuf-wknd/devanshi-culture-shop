@@ -99,7 +99,7 @@ export default function SearchDropdown({
                       .width(60)
                       .height(60)
                       .url()}
-                    alt={product.productImages[0].alt || product.productName[currentLang as keyof typeof product.productName]}
+                    alt={product.productImages[0].alt || product.productName[currentLang as keyof typeof product.productName] || product.productName.en}
                     fill
                     className="object-cover"
                     sizes="48px"
@@ -107,7 +107,7 @@ export default function SearchDropdown({
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <span className="text-xs font-serif font-bold text-primary">
-                      {product.productName[currentLang as keyof typeof product.productName]?.charAt(0)}
+                      {(product.productName[currentLang as keyof typeof product.productName] || product.productName.en)?.charAt(0)}
                     </span>
                   </div>
                 )}
@@ -116,11 +116,11 @@ export default function SearchDropdown({
                 {/* Product Info */}
                 <div className="flex-1 min-w-0">
                   <h3 className="font-medium text-sm text-foreground group-hover:text-primary transition-colors truncate">
-                    {product.productName[currentLang as keyof typeof product.productName]}
+                    {product.productName[currentLang as keyof typeof product.productName] || product.productName.en}
                   </h3>
                   {product.category && (
                     <p className="text-xs text-muted-foreground truncate">
-                      {product.category.categoryName[currentLang as keyof typeof product.category.categoryName]}
+                      {product.category.categoryName[currentLang as keyof typeof product.category.categoryName] || product.category.categoryName.en}
                     </p>
                   )}
                 </div>

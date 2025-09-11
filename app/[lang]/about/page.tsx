@@ -76,17 +76,17 @@ export async function generateMetadata({
 const portableTextComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p className="font-sans text-lg text-muted-foreground mb-6 leading-relaxed">
+      <p className="font-sans text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 leading-relaxed">
         {children}
       </p>
     ),
     h2: ({ children }: any) => (
-      <h2 className="font-serif text-3xl font-bold text-foreground mb-4">
+      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3 sm:mb-4">
         {children}
       </h2>
     ),
     h3: ({ children }: any) => (
-      <h3 className="font-serif text-2xl font-semibold text-foreground mb-3">
+      <h3 className="font-serif text-xl sm:text-2xl font-semibold text-foreground mb-2 sm:mb-3">
         {children}
       </h3>
     ),
@@ -140,9 +140,9 @@ export default async function AboutPage({ params }: PageProps) {
         <main>
           {/* Hero Section */}
           <section
-            className={`relative py-20 sm:py-24 lg:py-32 ${
+            className={`relative py-12 sm:py-20 md:py-24 lg:py-32 ${
               aboutPage?.heroImage
-                ? "min-h-[80vh] flex items-center"
+                ? "min-h-[60vh] sm:min-h-[80vh] flex items-center"
                 : "bg-secondary/30"
             }`}
           >
@@ -166,7 +166,7 @@ export default async function AboutPage({ params }: PageProps) {
               }`}
             >
               <h1
-                className={`font-serif text-4xl sm:text-5xl lg:text-6xl font-bold mb-8 ${
+                className={`font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 ${
                   aboutPage?.heroImage ? "text-white" : "text-foreground"
                 }`}
               >
@@ -177,26 +177,26 @@ export default async function AboutPage({ params }: PageProps) {
               </h1>
 
               {/* Decorative line */}
-              <div className="flex items-center justify-center space-x-4 mb-8">
+              <div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-6 sm:mb-8">
                 <div
-                  className={`w-16 h-px ${
+                  className={`w-12 sm:w-16 h-px ${
                     aboutPage?.heroImage ? "bg-white" : "bg-primary"
                   }`}
                 ></div>
                 <div
-                  className={`w-3 h-3 rounded-full ${
+                  className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full ${
                     aboutPage?.heroImage ? "bg-white" : "bg-primary"
                   }`}
                 ></div>
                 <div
-                  className={`w-16 h-px ${
+                  className={`w-12 sm:w-16 h-px ${
                     aboutPage?.heroImage ? "bg-white" : "bg-primary"
                   }`}
                 ></div>
               </div>
 
               <p
-                className={`font-sans text-xl leading-relaxed max-w-3xl mx-auto ${
+                className={`font-sans text-lg sm:text-xl leading-relaxed max-w-3xl mx-auto ${
                   aboutPage?.heroImage
                     ? "text-white/90"
                     : "text-muted-foreground"
@@ -211,10 +211,10 @@ export default async function AboutPage({ params }: PageProps) {
           </section>
 
           {/* Our Story Section */}
-          <section className="py-16 sm:py-20 bg-background">
+          <section className="py-12 sm:py-16 md:py-20 bg-background">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+              <div className="text-center mb-8 sm:mb-12">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                   {aboutPage?.storyHeading?.[lang as "en" | "nl"] ||
                     (lang === "en" ? "Our Story" : "Ons Verhaal")}
                 </h2>
@@ -229,7 +229,7 @@ export default async function AboutPage({ params }: PageProps) {
                   />
                 ) : (
                   <div className="text-center">
-                    <p className="font-sans text-lg text-muted-foreground leading-relaxed">
+                    <p className="font-sans text-base sm:text-lg text-muted-foreground leading-relaxed">
                       {lang === "en"
                         ? "Our story begins with a passion for preserving cultural heritage and bringing authentic products to those who appreciate tradition and quality craftsmanship."
                         : "Ons verhaal begint met een passie voor het behouden van cultureel erfgoed en het brengen van authentieke producten aan degenen die traditie en kwaliteitsvakmanschap waarderen."}
@@ -241,14 +241,14 @@ export default async function AboutPage({ params }: PageProps) {
           </section>
 
           {/* Values Section */}
-          <section className="py-16 sm:py-20 bg-secondary/30">
+          <section className="py-12 sm:py-16 md:py-20 bg-secondary/30">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+              <div className="text-center mb-10 sm:mb-16">
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                   {aboutPage?.valuesHeading?.[lang as "en" | "nl"] ||
                     (lang === "en" ? "Our Values" : "Onze Waarden")}
                 </h2>
-                <p className="font-sans text-lg text-muted-foreground max-w-3xl mx-auto">
+                <p className="font-sans text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
                   {aboutPage?.valuesSubheading?.[lang as "en" | "nl"] ||
                     (lang === "en"
                       ? "The principles that guide everything we do"
@@ -256,7 +256,7 @@ export default async function AboutPage({ params }: PageProps) {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 {aboutPage?.valuesList && aboutPage.valuesList.length > 0
                   ? aboutPage.valuesList.map((value: any, index: any) => (
                       <ValueCard
@@ -312,18 +312,18 @@ export default async function AboutPage({ params }: PageProps) {
 
           {/* Impact Section */}
           {aboutPage?.impactList && aboutPage.impactList.length > 0 && (
-            <section className="py-16 sm:py-20 bg-background">
+            <section className="py-12 sm:py-16 md:py-20 bg-background">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16">
-                  <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+                <div className="text-center mb-10 sm:mb-16">
+                  <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                     {aboutPage.impactHeading[lang as "en" | "nl"]}
                   </h2>
-                  <p className="font-sans text-lg text-muted-foreground max-w-3xl mx-auto">
+                  <p className="font-sans text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
                     {aboutPage.impactSubheading[lang as "en" | "nl"]}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                   {aboutPage.impactList.map((impact: any, index: any) => (
                     <ImpactStatistic
                       key={index}
@@ -338,7 +338,7 @@ export default async function AboutPage({ params }: PageProps) {
 
           {/* What We Offer Section */}
           <section
-            className={`relative py-16 sm:py-20 ${
+            className={`relative py-12 sm:py-16 md:py-20 ${
               !aboutPage?.offerImage ? "bg-secondary/30" : ""
             }`}
           >
@@ -353,9 +353,9 @@ export default async function AboutPage({ params }: PageProps) {
             )}
 
             <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-12">
+              <div className="text-center mb-8 sm:mb-12">
                 <h2
-                  className={`font-serif text-3xl sm:text-4xl font-bold mb-6 ${
+                  className={`font-serif text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6 ${
                     aboutPage?.offerImage ? "text-white" : "text-foreground"
                   }`}
                 >
@@ -365,13 +365,13 @@ export default async function AboutPage({ params }: PageProps) {
               </div>
 
               <div
-                className={`rounded-2xl p-8 shadow-lg ${
+                className={`rounded-2xl p-6 sm:p-8 shadow-lg ${
                   aboutPage?.offerImage
-                    ? "bg-background/10 backdrop-blur-sm border border-white/20"
+                    ? "bg-background/20 backdrop-blur-sm border border-white/20"
                     : "bg-background border border-border/50"
                 }`}
               >
-                <ul className="space-y-4 text-lg">
+                <ul className="space-y-3 sm:space-y-4 text-base sm:text-lg">
                   {aboutPage?.offerList && aboutPage.offerList.length > 0
                     ? aboutPage.offerList.map((item: any, index: any) => (
                         <li key={index} className="flex items-start space-x-4">
@@ -432,24 +432,24 @@ export default async function AboutPage({ params }: PageProps) {
           </section>
 
           {/* Call to Action Section */}
-          <section className="py-16 sm:py-20 bg-primary/5">
+          <section className="py-12 sm:py-16 md:py-20 bg-primary/5">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-6">
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4 sm:mb-6">
                 {aboutPage?.visitHeading?.[lang as "en" | "nl"] ||
                   (lang === "en" ? "Visit Us Today" : "Bezoek Ons Vandaag")}
               </h2>
 
-              <p className="font-sans text-lg text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed">
+              <p className="font-sans text-base sm:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed">
                 {aboutPage?.visitText?.[lang as "en" | "nl"] ||
                   (lang === "en"
                     ? "Come discover our collection of authentic cultural products. Experience the beauty and craftsmanship of traditional items that tell the stories of cultures from around the world."
                     : "Kom onze collectie authentieke culturele producten ontdekken. Ervaar de schoonheid en het vakmanschap van traditionele items die de verhalen van culturen van over de hele wereld vertellen.")}
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
                 <Link
                   href={`/${lang}/categories`}
-                  className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-8 py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg"
+                  className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-105 transform shadow-lg w-full sm:w-auto justify-center"
                 >
                   <span>
                     {lang === "en"
@@ -460,7 +460,7 @@ export default async function AboutPage({ params }: PageProps) {
 
                 <Link
                   href={`/${lang}`}
-                  className="inline-flex items-center space-x-2 bg-secondary text-secondary-foreground px-8 py-4 rounded-xl font-medium hover:bg-accent transition-colors border border-border"
+                  className="inline-flex items-center space-x-2 bg-secondary text-secondary-foreground px-6 py-3 sm:px-8 sm:py-4 rounded-xl font-medium hover:bg-accent transition-colors border border-border w-full sm:w-auto justify-center"
                 >
                   <span>
                     {lang === "en" ? "Visit Our Store" : "Bezoek Onze Winkel"}
@@ -482,14 +482,14 @@ export default async function AboutPage({ params }: PageProps) {
       <>
         <Header currentLang={lang} />
         <main>
-          <section className="py-16 sm:py-20 lg:py-24">
+          <section className="py-12 sm:py-16 md:py-20 lg:py-24">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-              <h1 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mb-8">
+              <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 sm:mb-8">
                 {lang === "en"
                   ? "About Devanshi Culture Shop"
                   : "Over Devanshi Culture Shop"}
               </h1>
-              <p className="font-sans text-xl text-muted-foreground leading-relaxed">
+              <p className="font-sans text-lg sm:text-xl text-muted-foreground leading-relaxed">
                 {lang === "en"
                   ? "We are currently updating our about page. Please check back soon!"
                   : "We werken momenteel onze over ons pagina bij. Kom binnenkort terug!"}

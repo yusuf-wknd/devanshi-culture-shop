@@ -79,14 +79,15 @@ export async function generateMetadata({
 
     const title =
       productData.seo?.metaTitle?.[lang as "en" | "nl"] ||
-      `${productData.productName[lang as "en" | "nl"]} - Devanshi Culture Shop`;
+      `${productData.productName[lang as "en" | "nl"] || productData.productName.en} - Devanshi Culture Shop`;
 
     const description =
       productData.seo?.metaDescription?.[lang as "en" | "nl"] ||
       productData.description?.[lang as "en" | "nl"] ||
+      productData.description?.en ||
       (lang === "en"
         ? `Discover ${productData.productName.en} at Devanshi Culture Shop - Authentic cultural products`
-        : `Ontdek ${productData.productName.nl} bij Devanshi Culture Shop - Authentieke culturele producten`);
+        : `Ontdek ${productData.productName.nl || productData.productName.en} bij Devanshi Culture Shop - Authentieke culturele producten`);
 
     return {
       title,
@@ -107,7 +108,7 @@ export async function generateMetadata({
                   height: 630,
                   alt:
                     productData.productImages[0].alt ||
-                    productData.productName[lang as "en" | "nl"],
+                    productData.productName[lang as "en" | "nl"] || productData.productName.en,
                 },
               ]
             : [],
@@ -141,10 +142,10 @@ export default async function ProductPage({ params }: PageProps) {
       notFound();
     }
 
-    const productName = productData.productName[lang as "en" | "nl"];
-    const productDescription = productData.description?.[lang as "en" | "nl"];
+    const productName = productData.productName[lang as "en" | "nl"] || productData.productName.en;
+    const productDescription = productData.description?.[lang as "en" | "nl"] || productData.description?.en;
     const categoryName =
-      productData.category?.categoryName?.[lang as "en" | "nl"];
+      productData.category?.categoryName?.[lang as "en" | "nl"] || productData.category?.categoryName?.en;
 
     // Get related products (same category, excluding current product)
     const relatedProducts = allProducts
@@ -250,32 +251,36 @@ export default async function ProductPage({ params }: PageProps) {
 
         <main>
           {/* Product Details */}
-          <section className="py-8 sm:py-12">
+          <section className="py-6 sm:py-8 md:py-12">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               {/* Breadcrumb & Category */}
-              <div className="mb-6">
+              <div className="mb-4 sm:mb-6">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-2 text-sm">
-                    <Link
-                      href={`/${lang}`}
-                      className="text-muted-foreground hover:text-primary transition-colors"
-                    >
-                      {lang === "en" ? "Home" : "Home"}
-                    </Link>
-                    <span className="text-muted-foreground">•</span>
+                  {/* Mobile: Show only category link */}
+                  <div className="flex items-center space-x-2 text-xs sm:text-sm">
                     <Link
                       href={`/${lang}/${category}`}
                       className="text-muted-foreground hover:text-primary transition-colors"
                     >
-                      {categoryName}
+                      ← {categoryName}
                     </Link>
-                    <span className="text-muted-foreground">•</span>
-                    <span className="text-foreground">{productName}</span>
+                    {/* Desktop: Show full breadcrumb */}
+                    <div className="hidden sm:flex items-center space-x-2">
+                      <span className="text-muted-foreground">•</span>
+                      <Link
+                        href={`/${lang}`}
+                        className="text-muted-foreground hover:text-primary transition-colors"
+                      >
+                        {lang === "en" ? "Home" : "Home"}
+                      </Link>
+                      <span className="text-muted-foreground">•</span>
+                      <span className="text-foreground truncate max-w-[150px]">{productName}</span>
+                    </div>
                   </div>
                   {categoryName && (
                     <Link
                       href={`/${lang}/${category}`}
-                      className="inline-block text-xs font-medium text-primary/80 hover:text-primary transition-colors uppercase tracking-wider px-3 py-1 bg-primary/10 rounded-full"
+                      className="hidden sm:inline-block text-xs font-medium text-primary/80 hover:text-primary transition-colors uppercase tracking-wider px-3 py-1 bg-primary/10 rounded-full"
                     >
                       {categoryName}
                     </Link>
@@ -294,23 +299,23 @@ export default async function ProductPage({ params }: PageProps) {
                 </div>
 
                 {/* Product Info - 1/3 width */}
-                <div className="space-y-4 sm:space-y-6">
+                <div className="space-y-3 sm:space-y-4 md:space-y-6">
                   {/* Product Name & Price */}
-                  <div className="space-y-3 sm:space-y-4">
-                    <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
+                  <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                    <h1 className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight">
                       {productName}
                     </h1>
 
                     {/* Pricing & Availability - Stack on mobile */}
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+                    <div className="flex flex-col gap-2 sm:gap-3">
                       {productData.price && (
                         <div className="flex items-baseline space-x-2 sm:space-x-3">
-                          <span className="font-sans text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
+                          <span className="font-sans text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-foreground">
                             €{productData.price.toFixed(2)}
                           </span>
                           {productData.comparePrice &&
                             productData.comparePrice > productData.price && (
-                              <span className="font-sans text-base sm:text-lg text-muted-foreground line-through">
+                              <span className="font-sans text-sm sm:text-base md:text-lg text-muted-foreground line-through">
                                 €{productData.comparePrice.toFixed(2)}
                               </span>
                             )}
@@ -319,7 +324,7 @@ export default async function ProductPage({ params }: PageProps) {
 
                       {/* Compact Availability Badge */}
                       <div
-                        className={`inline-flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs sm:text-sm font-medium self-start sm:self-auto ${
+                        className={`inline-flex items-center space-x-2 px-2 py-1 sm:px-3 sm:py-1.5 rounded-full text-xs sm:text-sm font-medium self-start ${
                           productData.isAvailable
                             ? "bg-green-50 text-green-700 border border-green-200"
                             : "bg-gray-50 text-gray-600 border border-gray-200"
@@ -348,19 +353,19 @@ export default async function ProductPage({ params }: PageProps) {
                   {/* Description */}
                   {productDescription && (
                     <div className="prose prose-sm max-w-none">
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                         {productDescription}
                       </p>
                     </div>
                   )}
 
                   {/* Primary Action */}
-                  <div className="space-y-3 sm:space-y-4 pt-4 border-t border-border/50">
+                  <div className="space-y-2 sm:space-y-3 md:space-y-4 pt-3 sm:pt-4 border-t border-border/50">
                     <a
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full flex items-center justify-center space-x-3 py-3 sm:py-4 px-4 sm:px-6 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl text-sm sm:text-base"
+                      className="w-full flex items-center justify-center space-x-2 sm:space-x-3 py-3 sm:py-4 px-4 sm:px-6 bg-green-500 text-white font-semibold rounded-xl hover:bg-green-600 transition-all duration-300 hover:scale-[1.02] shadow-lg hover:shadow-xl text-sm sm:text-base"
                     >
                       <WhatsAppIcon className="w-4 sm:w-5 h-4 sm:h-5" />
                       <span>
@@ -374,9 +379,9 @@ export default async function ProductPage({ params }: PageProps) {
                     <div className="grid grid-cols-2 gap-2 sm:gap-3">
                       <Link
                         href={`/${lang}/contact`}
-                        className="flex items-center justify-center space-x-1 sm:space-x-2 py-2.5 sm:py-3 px-3 sm:px-4 bg-background border-2 border-primary text-primary font-medium rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-xs sm:text-sm"
+                        className="flex items-center justify-center space-x-1 sm:space-x-2 py-2 sm:py-2.5 md:py-3 px-2 sm:px-3 md:px-4 bg-background border-2 border-primary text-primary font-medium rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-xs sm:text-sm"
                       >
-                        <MapPinIcon className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+                        <MapPinIcon className="w-3 sm:w-3.5 md:w-4 h-3 sm:h-3.5 md:h-4" />
                         <span>
                           {lang === "en" ? "Visit Store" : "Bezoek Winkel"}
                         </span>
@@ -495,22 +500,22 @@ export default async function ProductPage({ params }: PageProps) {
 
           {/* Related Products */}
           {relatedProducts.length > 0 && (
-            <section className="py-12 sm:py-16 bg-secondary/30 border-t border-border/20">
+            <section className="py-8 sm:py-12 md:py-16 bg-secondary/30 border-t border-border/20">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-8 sm:mb-12">
-                  <h2 className="font-serif text-2xl sm:text-3xl font-bold text-foreground mb-3">
+                <div className="text-center mb-6 sm:mb-8 md:mb-12">
+                  <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3">
                     {lang === "en"
                       ? "You Might Also Like"
                       : "Dit Zou Je Ook Kunnen Bevallen"}
                   </h2>
-                  <p className="text-muted-foreground text-sm sm:text-base">
+                  <p className="text-muted-foreground text-xs sm:text-sm md:text-base">
                     {lang === "en"
                       ? `More from our ${categoryName?.toLowerCase()} collection`
                       : `Meer uit onze ${categoryName?.toLowerCase()} collectie`}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
                   {relatedProducts.map((relatedProduct: Product) => (
                     <ProductCard
                       key={relatedProduct._id}
@@ -521,10 +526,10 @@ export default async function ProductPage({ params }: PageProps) {
                   ))}
                 </div>
 
-                <div className="text-center mt-8 sm:mt-12">
+                <div className="text-center mt-6 sm:mt-8 md:mt-12">
                   <Link
                     href={`/${lang}/${category}`}
-                    className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-6 py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-[1.02] transform shadow-lg text-sm sm:text-base"
+                    className="inline-flex items-center space-x-2 bg-primary text-primary-foreground px-4 py-2.5 sm:px-6 sm:py-3 rounded-xl font-medium hover:bg-primary/90 transition-all duration-300 hover:scale-[1.02] transform shadow-lg text-xs sm:text-sm md:text-base"
                   >
                     <span>
                       {lang === "en"
@@ -532,7 +537,7 @@ export default async function ProductPage({ params }: PageProps) {
                         : `Bekijk Alle ${categoryName}`}
                     </span>
                     <svg
-                      className="w-4 h-4"
+                      className="w-3 h-3 sm:w-4 sm:h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
