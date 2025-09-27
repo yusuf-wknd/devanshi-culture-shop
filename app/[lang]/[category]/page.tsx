@@ -2,6 +2,7 @@ import {
   getCategoryBySlug,
   getProductsByCategory,
   getCategoryStaticParams,
+  getAllCategories,
 } from "@/sanity/lib/queries";
 import type { Category, Product } from "@/sanity/lib/queries";
 import Header from "@/components/Header";
@@ -101,10 +102,11 @@ export default async function CategoryPage({ params }: PageProps) {
   const { lang, category } = await params;
 
   try {
-    // Fetch category and its products
-    const [categoryData, products] = await Promise.all([
+    // Fetch category, its products, and all categories
+    const [categoryData, products, categories] = await Promise.all([
       getCategoryBySlug(category),
       getProductsByCategory(category).catch(() => []),
+      getAllCategories().catch(() => []),
     ]);
 
     if (!categoryData) {
@@ -173,77 +175,30 @@ export default async function CategoryPage({ params }: PageProps) {
             __html: JSON.stringify(breadcrumbData),
           }}
         />
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={categories} />
 
         <main>
-          {/* Category Hero with Background Image */}
-          <section className="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-            {/* Background Image */}
-            {categoryData.categoryImage && (
-              <Image
-                src={urlFor(categoryData.categoryImage.asset)
-                  .width(1920)
-                  .height(800)
-                  .url()}
-                alt={categoryData.categoryImage.alt || categoryName}
-                fill
-                className="object-cover"
-                priority
-                sizes="100vw"
-              />
-            )}
-
-            {/* Overlay */}
-            <div className="absolute inset-0 bg-black/50"></div>
-
-            {/* Content */}
-            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-              {/* Breadcrumb */}
-              <div className="mb-8">
-                <div className="flex items-center justify-center space-x-2 text-sm text-white/80">
-                  <Link
-                    href={`/${lang}`}
-                    className="hover:text-white transition-colors"
-                  >
-                    {lang === "en" ? "Home" : "Home"}
-                  </Link>
-                  <span>•</span>
-                  <span>{categoryName}</span>
-                </div>
-              </div>
-
-              {/* Category Info */}
-              <div className="space-y-6">
-                <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold">
+          {/* Category Header */}
+          <section className="py-4 sm:py-6">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              {/* Category Name and Product Count */}
+              <div className="flex items-center justify-start space-x-3">
+                <h1 className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
                   {categoryName}
                 </h1>
-
-                {categoryDescription && (
-                  <p className="text-lg sm:text-xl max-w-3xl mx-auto leading-relaxed text-white/90">
-                    {categoryDescription}
-                  </p>
-                )}
-
-                <div className="inline-flex items-center space-x-2 text-sm text-white/80">
-                  <div className="w-2 h-2 bg-white rounded-full"></div>
-                  <span>
-                    {products.length}{" "}
-                    {lang === "en"
-                      ? products.length === 1
-                        ? "Product"
-                        : "Products"
-                      : products.length === 1
-                        ? "Product"
-                        : "Producten"}
-                  </span>
-                </div>
+                <span className="text-muted-foreground hidden sm:inline">•</span>
+                <span className="text-sm sm:text-base text-muted-foreground hidden sm:inline">
+                  {products.length}{" "}
+                  {lang === "en"
+                    ? products.length === 1
+                      ? "Product"
+                      : "Products"
+                    : products.length === 1
+                      ? "Product"
+                      : "Producten"}
+                </span>
               </div>
             </div>
-
-            {/* Fallback background if no image */}
-            {!categoryData.categoryImage && (
-              <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary/80"></div>
-            )}
           </section>
 
           {/* Client-side Products Grid with Search & Sort */}

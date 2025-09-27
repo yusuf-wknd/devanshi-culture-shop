@@ -81,7 +81,7 @@ export default async function HomePage({ params }: PageProps) {
           __html: JSON.stringify(websiteData),
         }}
       />
-      <Header currentLang={lang} />
+      <Header currentLang={lang} categories={categories} />
 
       <main>
         {/* Hero Slider */}
@@ -104,6 +104,26 @@ export default async function HomePage({ params }: PageProps) {
             </div>
           </section>
         )}
+
+        {/* Tagline Section */}
+        <section className="py-8 sm:py-12 bg-secondary/20">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground leading-tight">
+              {lang === "en"
+                ? "Authentic Cultural Treasures from India, Africa & Suriname in the Heart of Amsterdam"
+                : "Authentieke Culturele Schatten uit India, Afrika & Suriname in het Hart van Amsterdam"}
+            </h2>
+
+            {/* Decorative elements */}
+            <div className="flex items-center justify-center mt-6 sm:mt-8">
+              <div className="flex items-center space-x-2">
+                <div className="w-1 h-1 bg-primary rounded-full"></div>
+                <div className="w-2 h-2 bg-primary rounded-full"></div>
+                <div className="w-1 h-1 bg-primary rounded-full"></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Welcome Section */}
         <WelcomeSection

@@ -1,5 +1,5 @@
-import { searchProducts } from "@/sanity/lib/queries"
-import type { Product } from "@/sanity/lib/queries"
+import { searchProducts, getAllCategories } from "@/sanity/lib/queries"
+import type { Product, Category } from "@/sanity/lib/queries"
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
 import ProductGrid from "@/components/ProductGrid"
@@ -50,11 +50,14 @@ export async function generateMetadata({ params, searchParams }: PageProps): Pro
 export default async function SearchPage({ params, searchParams }: PageProps) {
   const { lang } = await params
   const { q } = await searchParams
-  
+
   let products: Product[] = []
   let hasSearched = false
   let isLoading = false
-  
+
+  // Fetch categories for header
+  const categories = await getAllCategories().catch(() => [])
+
   // Only search if there's a query parameter
   if (q && q.trim()) {
     hasSearched = true
@@ -70,7 +73,7 @@ export default async function SearchPage({ params, searchParams }: PageProps) {
 
   return (
     <>
-      <Header currentLang={lang} />
+      <Header currentLang={lang} categories={categories} />
       
       <main>
         {/* Search Header */}

@@ -51,13 +51,17 @@ export default function CategoryProductsGrid({
       const query = searchQuery.toLowerCase();
       filteredProducts = products.filter((product) => {
         const name =
-          (product.productName[
-            currentLang as keyof typeof product.productName
-          ] || product.productName.en)?.toLowerCase() || "";
+          (
+            product.productName[
+              currentLang as keyof typeof product.productName
+            ] || product.productName.en
+          )?.toLowerCase() || "";
         const description =
-          (product.description?.[
-            currentLang as keyof typeof product.description
-          ] || product.description?.en)?.toLowerCase() || "";
+          (
+            product.description?.[
+              currentLang as keyof typeof product.description
+            ] || product.description?.en
+          )?.toLowerCase() || "";
         return name.includes(query) || description.includes(query);
       });
     }
@@ -67,9 +71,13 @@ export default function CategoryProductsGrid({
       switch (sortBy) {
         case "name-asc":
           return (
-            a.productName[currentLang as keyof typeof a.productName] || a.productName.en || ""
+            a.productName[currentLang as keyof typeof a.productName] ||
+            a.productName.en ||
+            ""
           ).localeCompare(
-            b.productName[currentLang as keyof typeof b.productName] || b.productName.en || ""
+            b.productName[currentLang as keyof typeof b.productName] ||
+              b.productName.en ||
+              ""
           );
         case "price-asc":
           return (a.price || 0) - (b.price || 0);
@@ -87,16 +95,17 @@ export default function CategoryProductsGrid({
   return (
     <>
       {/* Compact Filter Toolbar */}
-      <div className="bg-background border-b border-border/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6">
+      <div className=" border-b border-border/50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 sm:py-3">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
             {/* Product Count */}
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <span className="font-medium text-foreground">
-                {searchQuery 
+                {searchQuery
                   ? `${sortedAndFilteredProducts.length}`
-                  : currentLang === "en" ? "Showing All" : "Alle Tonen"
-                }
+                  : currentLang === "en"
+                    ? "Showing All"
+                    : "Alle Tonen"}
               </span>
               <span>
                 {searchQuery
@@ -107,7 +116,7 @@ export default function CategoryProductsGrid({
                     : sortedAndFilteredProducts.length === 1
                       ? "product"
                       : "producten"
-                  : currentLang === "en" 
+                  : currentLang === "en"
                     ? "products"
                     : "producten"}
               </span>
@@ -123,9 +132,9 @@ export default function CategoryProductsGrid({
             </div>
 
             {/* Search and Sort Controls */}
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 lg:ml-auto">
+            <div className="flex flex-col sm:flex-row gap-2 lg:gap-3 lg:ml-auto">
               {/* Search Input - Takes more space */}
-              <div className="flex-1 min-w-0 sm:min-w-[300px]">
+              <div className="flex-1 min-w-0 sm:min-w-[240px]">
                 <SearchInput
                   currentLang={currentLang}
                   placeholder={
@@ -153,11 +162,11 @@ export default function CategoryProductsGrid({
       </div>
 
       {/* Products Grid */}
-      <section className="py-16 sm:py-20">
+      <section className="py-6 sm:py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {sortedAndFilteredProducts.length > 0 ? (
             <>
-              <div className="text-center mb-16">
+              <div className="text-center mb-6">
                 <h2 className="font-serif text-3xl sm:text-4xl font-bold text-foreground mb-4">
                   {currentLang === "en" ? "Our Collection" : "Onze Collectie"}
                 </h2>

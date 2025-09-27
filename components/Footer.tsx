@@ -7,7 +7,7 @@ import {
   EnvelopeIcon,
   HeartIcon,
 } from "@heroicons/react/24/outline";
-import { getAllCategories } from "@/sanity/lib/queries";
+import { getAllCategories, getStoreSettings } from "@/sanity/lib/queries";
 import type { Category } from "@/sanity/lib/queries";
 
 // Social Media Icons
@@ -23,38 +23,20 @@ const WhatsAppIcon = ({ className = "w-5 h-5" }: { className?: string }) => (
   </svg>
 );
 
-interface StoreSection {
-  storeImage?: {
-    asset: any;
-    alt: string;
-  };
-  address?: {
-    en: string;
-    nl: string;
-  };
-  timings?: {
-    en: string;
-    nl: string;
-  };
-  contactInfo?: {
-    en: string;
-    nl: string;
-  };
-}
-
 interface FooterProps {
-  storeSection?: StoreSection;
   currentLang: string;
 }
 
 export default async function Footer({
-  storeSection,
   currentLang = "en",
 }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
-  // Fetch categories from Sanity
-  const allCategories = await getAllCategories().catch(() => []);
+  // Fetch categories and store settings from Sanity
+  const [allCategories, storeSettings] = await Promise.all([
+    getAllCategories().catch(() => []),
+    getStoreSettings().catch(() => null),
+  ]);
   const topCategories = allCategories.slice(0, 3);
 
   const navigation = {
@@ -196,52 +178,47 @@ export default async function Footer({
               {currentLang === "en" ? "Visit Us" : "Bezoek Ons"}
             </h4>
             <div className="space-y-3">
-              {storeSection?.address && (
-                <div className="flex items-start space-x-3">
-                  <MapPinIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                  <p className="text-primary-foreground/70 font-sans text-sm">
-                    {
-                      storeSection.address[
-                        currentLang as keyof typeof storeSection.address
-                      ]
-                    }
-                  </p>
-                </div>
-              )}
+              {/* Address */}
+              <div className="flex items-start space-x-3">
+                <MapPinIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <p className="text-primary-foreground/70 font-sans text-sm">
+                  {storeSettings?.address?.[currentLang as 'en' | 'nl'] ||
+                   storeSettings?.address?.en ||
+                   "Anton de Komplein 160\n1102 BP Amsterdam\nNetherlands"}
+                </p>
+              </div>
 
-              {storeSection?.timings && (
-                <div className="flex items-start space-x-3">
-                  <ClockIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                  <p className="text-primary-foreground/70 font-sans text-sm">
-                    {
-                      storeSection.timings[
-                        currentLang as keyof typeof storeSection.timings
-                      ]
-                    }
-                  </p>
-                </div>
-              )}
+              {/* Store Hours */}
+              <div className="flex items-start space-x-3">
+                <ClockIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <p className="text-primary-foreground/70 font-sans text-sm whitespace-pre-line">
+                  {storeSettings?.timings?.[currentLang as 'en' | 'nl'] ||
+                   storeSettings?.timings?.en ||
+                   (currentLang === "en"
+                     ? "Monday - Saturday: 10:00 - 18:00\nSunday: Closed"
+                     : "Maandag - Zaterdag: 10:00 - 18:00\nZondag: Gesloten")}
+                </p>
+              </div>
 
-              {storeSection?.contactInfo && (
-                <div className="flex items-start space-x-3">
-                  <PhoneIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
-                  <p className="text-primary-foreground/70 font-sans text-sm">
-                    {
-                      storeSection.contactInfo[
-                        currentLang as keyof typeof storeSection.contactInfo
-                      ]
-                    }
-                  </p>
-                </div>
-              )}
+              {/* Phone */}
+              <div className="flex items-start space-x-3">
+                <PhoneIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
+                <a
+                  href={`tel:${storeSettings?.phoneMain || "+31618264718"}`}
+                  className="text-primary-foreground/70 hover:text-accent transition-colors font-sans text-sm"
+                >
+                  {storeSettings?.phoneMain || "+31 6 1826 4718"}
+                </a>
+              </div>
 
+              {/* Email */}
               <div className="flex items-start space-x-3">
                 <EnvelopeIcon className="w-5 h-5 text-accent mt-0.5 flex-shrink-0" />
                 <a
-                  href="mailto:info@devanshicultureshop.nl"
+                  href={`mailto:${storeSettings?.email || "info@devanshicultureshop.nl"}`}
                   className="text-primary-foreground/70 hover:text-accent transition-colors font-sans text-sm"
                 >
-                  info@devanshicultureshop.nl
+                  {storeSettings?.email || "info@devanshicultureshop.nl"}
                 </a>
               </div>
             </div>

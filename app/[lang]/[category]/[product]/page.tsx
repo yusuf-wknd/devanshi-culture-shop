@@ -4,6 +4,7 @@ import {
   getAllProducts,
   getCategoryStaticParams,
   getStoreSettings,
+  getAllCategories,
 } from "@/sanity/lib/queries";
 import type { Product, StoreSettings } from "@/sanity/lib/queries";
 import Header from "@/components/Header";
@@ -126,11 +127,12 @@ export default async function ProductPage({ params }: PageProps) {
   const { lang, category, product } = await params;
 
   try {
-    // Fetch product, related products, and store settings
-    const [productData, allProducts, storeSettings] = await Promise.all([
+    // Fetch product, related products, store settings, and categories
+    const [productData, allProducts, storeSettings, categories] = await Promise.all([
       getProductBySlug(product),
       getAllProducts().catch(() => []),
       getStoreSettings().catch(() => null),
+      getAllCategories().catch(() => []),
     ]);
 
     if (!productData) {
@@ -247,7 +249,7 @@ export default async function ProductPage({ params }: PageProps) {
             __html: JSON.stringify(breadcrumbData),
           }}
         />
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={categories} />
 
         <main>
           {/* Product Details */}

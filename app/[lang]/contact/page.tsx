@@ -1,5 +1,5 @@
-import { getStoreSettings } from "@/sanity/lib/queries";
-import type { StoreSettings } from "@/sanity/lib/queries";
+import { getStoreSettings, getAllCategories } from "@/sanity/lib/queries";
+import type { StoreSettings, Category } from "@/sanity/lib/queries";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -47,7 +47,10 @@ export default async function ContactPage({ params }: PageProps) {
   const { lang } = await params;
 
   try {
-    const storeSettings = await getStoreSettings().catch(() => null);
+    const [storeSettings, categories] = await Promise.all([
+      getStoreSettings().catch(() => null),
+      getAllCategories().catch(() => []),
+    ]);
 
     // Generate LocalBusiness schema for contact page
     const businessData = {
@@ -82,7 +85,7 @@ export default async function ContactPage({ params }: PageProps) {
             __html: JSON.stringify(businessData),
           }}
         />
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={categories} />
 
         <main>
           {/* Hero Section */}
@@ -405,7 +408,7 @@ export default async function ContactPage({ params }: PageProps) {
     // Return fallback contact page
     return (
       <>
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={[]} />
         <main>
           <section className="py-12 sm:py-16 md:py-20 lg:py-24">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

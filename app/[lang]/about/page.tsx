@@ -1,5 +1,5 @@
-import { getAboutPage } from "@/sanity/lib/queries";
-import type { AboutPage } from "@/sanity/lib/queries";
+import { getAboutPage, getAllCategories } from "@/sanity/lib/queries";
+import type { AboutPage, Category } from "@/sanity/lib/queries";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ValueCard from "@/components/ValueCard";
@@ -105,7 +105,10 @@ export default async function AboutPage({ params }: PageProps) {
   const { lang } = await params;
 
   try {
-    const aboutPage = await getAboutPage().catch(() => null);
+    const [aboutPage, categories] = await Promise.all([
+      getAboutPage().catch(() => null),
+      getAllCategories().catch(() => []),
+    ]);
 
     // Generate Organization schema for about page
     const organizationData = {
@@ -135,7 +138,7 @@ export default async function AboutPage({ params }: PageProps) {
             __html: JSON.stringify(organizationData),
           }}
         />
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={categories} />
 
         <main>
           {/* Hero Section */}
@@ -480,7 +483,7 @@ export default async function AboutPage({ params }: PageProps) {
     // Return fallback page content
     return (
       <>
-        <Header currentLang={lang} />
+        <Header currentLang={lang} categories={[]} />
         <main>
           <section className="py-12 sm:py-16 md:py-20 lg:py-24">
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

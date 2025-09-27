@@ -38,11 +38,11 @@ export default async function CategoriesPage({ params }: PageProps) {
 
   return (
     <>
-      <Header currentLang={lang} />
+      <Header currentLang={lang} categories={categories} />
       
       <main>
         {/* Page Header */}
-        <section className="relative py-16 sm:py-20 min-h-[60vh] flex items-center" 
+        <section className="relative py-10 sm:py-12"
                  style={{
                    backgroundImage: 'url(/categories.png)',
                    backgroundSize: 'cover',
@@ -51,19 +51,17 @@ export default async function CategoriesPage({ params }: PageProps) {
                  }}>
           {/* Dark overlay for better text readability */}
           <div className="absolute inset-0 bg-black/50" />
-          
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="text-center mb-12">
-              <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
-                {lang === 'en' ? 'All Categories' : 'Alle Categorieën'}
-              </h1>
-              <p className="font-sans text-lg text-white/90 max-w-3xl mx-auto">
-                {lang === 'en' 
-                  ? 'Explore our complete collection of cultural products organized by category'
-                  : 'Ontdek onze complete collectie culturele producten georganiseerd per categorie'
-                }
-              </p>
-            </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              {lang === 'en' ? 'All Categories' : 'Alle Categorieën'}
+            </h1>
+            <p className="font-sans text-base sm:text-lg text-white/90 max-w-2xl mx-auto">
+              {lang === 'en'
+                ? 'Explore our complete collection of cultural products organized by category'
+                : 'Ontdek onze complete collectie culturele producten georganiseerd per categorie'
+              }
+            </p>
           </div>
         </section>
 
