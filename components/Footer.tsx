@@ -5,7 +5,6 @@ import {
   ClockIcon,
   PhoneIcon,
   EnvelopeIcon,
-  HeartIcon,
 } from "@heroicons/react/24/outline";
 import { getAllCategories, getStoreSettings } from "@/sanity/lib/queries";
 import type { Category } from "@/sanity/lib/queries";
@@ -235,30 +234,16 @@ export default async function Footer({
                 : "Alle rechten voorbehouden."}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center sm:space-x-1 text-primary-foreground/70 font-sans text-xs sm:text-sm text-center">
-              <div className="flex items-center space-x-1">
-                <span>{currentLang === "en" ? "Made with" : "Gemaakt met"}</span>
-                <HeartIcon className="w-3 h-3 sm:w-4 sm:h-4 text-red-500" />
-                <span>{currentLang === "en" ? "by" : "door"}</span>
-                <a
-                  href="https://weekendlabs.in"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-accent hover:text-accent/80 transition-colors font-medium"
-                >
-                  Weekend Labs
-                </a>
-              </div>
-              <span className="hidden sm:inline">
-                {currentLang === "en"
-                  ? "for cultural heritage"
-                  : "voor cultureel erfgoed"}
-              </span>
-              <span className="sm:hidden mt-1">
-                {currentLang === "en"
-                  ? "for cultural heritage"
-                  : "voor cultureel erfgoed"}
-              </span>
+            <div className="flex items-center space-x-1 text-primary-foreground/70 font-sans text-xs sm:text-sm text-center">
+              <span>{currentLang === "en" ? "Designed & Developed by" : "Ontworpen & Ontwikkeld door"}</span>
+              <a
+                href="https://moosebase.com"
+                target="_blank"
+                rel=""
+                className="text-accent hover:text-accent/80 transition-colors font-medium"
+              >
+                MooseBase
+              </a>
             </div>
           </div>
         </div>
