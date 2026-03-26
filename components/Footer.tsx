@@ -234,17 +234,14 @@ export default async function Footer({
                 : "Alle rechten voorbehouden."}
             </p>
 
-            <div className="flex items-center space-x-1 text-primary-foreground/70 font-sans text-xs sm:text-sm text-center">
-              <span>{currentLang === "en" ? "Designed & Developed by" : "Ontworpen & Ontwikkeld door"}</span>
-              <a
-                href="https://moosebase.com"
-                target="_blank"
-                rel=""
-                className="text-accent hover:text-accent/80 transition-colors font-medium"
-              >
-                MooseBase
-              </a>
-            </div>
+            <a
+              href="https://moosebase.com"
+              target="_blank"
+              rel=""
+              className="text-primary-foreground/70 hover:text-accent transition-colors font-sans text-xs sm:text-sm font-medium text-center"
+            >
+              {currentLang === "en" ? "Web Design by MooseBase" : "Webdesign door MooseBase"}
+            </a>
           </div>
         </div>
       </div>
